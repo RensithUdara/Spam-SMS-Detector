@@ -104,8 +104,8 @@ class SpamDetector:
                 processed_message = "empty message"
             
             # Check if model is a pipeline or separate components
-            if hasattr(self.model, 'predict') and hasattr(self.model, 'named_steps'):
-                # Pipeline model
+            if hasattr(self.model, 'named_steps') and 'vectorizer' in self.model.named_steps:
+                # Pipeline model with vectorizer
                 prediction = self.model.predict([processed_message])[0]
                 if hasattr(self.model, 'predict_proba'):
                     confidence = self.model.predict_proba([processed_message])[0]
@@ -113,7 +113,7 @@ class SpamDetector:
                 else:
                     spam_confidence = 0.5  # Default when no probability available
             else:
-                # Separate vectorizer and model
+                # Separate vectorizer and model (current setup)
                 message_vector = self.vectorizer.transform([processed_message])
                 prediction = self.model.predict(message_vector)[0]
                 if hasattr(self.model, 'predict_proba'):
