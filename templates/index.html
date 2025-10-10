@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Radar Spam Detector</title>
     <!-- Bootstrap CSS CDN -->
@@ -22,12 +23,12 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background: radial-gradient(circle at center, 
-                transparent 0%, 
-                rgba(0, 255, 0, 0.02) 25%, 
-                rgba(0, 255, 0, 0.05) 50%, 
-                rgba(0, 255, 0, 0.02) 75%, 
-                transparent 100%);
+            background: radial-gradient(circle at center,
+                    transparent 0%,
+                    rgba(0, 255, 0, 0.02) 25%,
+                    rgba(0, 255, 0, 0.05) 50%,
+                    rgba(0, 255, 0, 0.02) 75%,
+                    transparent 100%);
         }
 
         .radar-sweep {
@@ -40,15 +41,13 @@
             aspect-ratio: 1/1;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                transparent 270deg,
-                rgba(0, 255, 0, 0.3) 315deg,
-                rgba(0, 255, 0, 0.6) 330deg,
-                rgba(0, 255, 0, 0.3) 345deg,
-                transparent 360deg
-            );
+            background: conic-gradient(from 0deg,
+                    transparent 0deg,
+                    transparent 270deg,
+                    rgba(0, 255, 0, 0.3) 315deg,
+                    rgba(0, 255, 0, 0.6) 330deg,
+                    rgba(0, 255, 0, 0.3) 345deg,
+                    transparent 360deg);
             animation: radar-sweep 3s linear infinite;
         }
 
@@ -99,7 +98,7 @@
             min-width: 250px;
             aspect-ratio: 1/1;
             transform: translate(-50%, -50%);
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
             background-size: 5vw 5vw, 5vw 5vw;
@@ -108,19 +107,43 @@
         }
 
         @keyframes radar-sweep {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes radar-pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
         }
 
         @keyframes grid-flicker {
-            0%, 100% { opacity: 0.3; }
-            25% { opacity: 0.6; }
-            75% { opacity: 0.4; }
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            25% {
+                opacity: 0.6;
+            }
+
+            75% {
+                opacity: 0.4;
+            }
         }
 
         /* Card Styling */
@@ -129,7 +152,7 @@
             border: 2px solid #00ff00;
             border-radius: 15px;
             backdrop-filter: blur(10px);
-            box-shadow: 
+            box-shadow:
                 0 0 30px rgba(0, 255, 0, 0.3),
                 inset 0 0 20px rgba(0, 255, 0, 0.1);
         }
@@ -199,13 +222,27 @@
         }
 
         @keyframes threat-detected {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+            }
         }
 
         @keyframes clean-detected {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.7); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
+            }
         }
 
         .container {
@@ -214,12 +251,16 @@
             z-index: 1;
             max-width: 100vw;
         }
+
         /* Responsive adjustments */
         @media (max-width: 991.98px) {
             .col-md-8.col-lg-7 {
                 max-width: 95vw;
             }
-            .radar-sweep, .radar-rings, .radar-grid {
+
+            .radar-sweep,
+            .radar-rings,
+            .radar-grid {
                 width: 90vw;
                 min-width: 150px;
             }
@@ -229,15 +270,20 @@
             .container {
                 padding: 1rem 0.2rem;
             }
+
             .col-md-8.col-lg-7 {
                 padding: 0;
                 max-width: 100vw;
             }
+
             .detector-card {
                 border-radius: 8px;
                 padding: 0.5rem;
             }
-            .radar-sweep, .radar-rings, .radar-grid {
+
+            .radar-sweep,
+            .radar-rings,
+            .radar-grid {
                 width: 98vw;
                 min-width: 100px;
             }
@@ -247,21 +293,28 @@
             .container {
                 padding: 0.5rem 0.1rem;
             }
+
             .col-md-8.col-lg-7 {
                 padding: 0;
                 max-width: 100vw;
             }
+
             .detector-card {
                 border-radius: 4px;
                 padding: 0.2rem;
             }
-            .radar-sweep, .radar-rings, .radar-grid {
+
+            .radar-sweep,
+            .radar-rings,
+            .radar-grid {
                 width: 100vw;
                 min-width: 60px;
             }
+
             .card-title {
                 font-size: 1.2rem;
             }
+
             .form-label {
                 font-size: 1rem;
             }
@@ -289,11 +342,20 @@
         }
 
         @keyframes status-blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.3; }
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0.3;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Radar Background Animation -->
     <div class="radar-bg">
@@ -309,14 +371,16 @@
                     <span class="status-indicator"></span>
                     RADAR THREAT DETECTION SYSTEM v2.1 - STATUS: ONLINE
                 </div>
-                
+
                 <div class="card detector-card shadow">
                     <div class="card-body">
                         <h1 class="card-title text-center mb-4">🛡️ SPAM RADAR SCANNER</h1>
                         <form action="/predict" method="post">
                             <div class="mb-3">
                                 <label for="message" class="form-label">📡 MESSAGE ANALYSIS INPUT</label>
-                                <textarea id="message" name="message" class="form-control" rows="4" placeholder="[INPUT] Enter suspicious message for threat analysis..." required></textarea>
+                                <textarea id="message" name="message" class="form-control" rows="4"
+                                    placeholder="[INPUT] Enter suspicious message for threat analysis..."
+                                    required></textarea>
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-scan">🔍 INITIATE SCAN</button>
@@ -326,34 +390,34 @@
                         <div class="alert mt-4 {{ 'alert-danger' if prediction == 'Spam' else 'alert-success' }}">
                             <p class="mb-1"><strong>📋 ANALYZED MESSAGE:</strong> {{ message }}</p>
                             <p class="mb-1">
-                                <strong>🎯 THREAT STATUS:</strong> 
+                                <strong>🎯 THREAT STATUS:</strong>
                                 {% if prediction == 'Spam' %}
-                                    ⚠️ SPAM DETECTED - THREAT IDENTIFIED
+                                ⚠️ SPAM DETECTED - THREAT IDENTIFIED
                                 {% else %}
-                                    ✅ CLEAN - NO THREATS FOUND
+                                ✅ CLEAN - NO THREATS FOUND
                                 {% endif %}
                             </p>
                             {% if confidence %}
                             <p class="mb-0">
-                                <strong>🔍 CONFIDENCE LEVEL:</strong> 
+                                <strong>🔍 CONFIDENCE LEVEL:</strong>
                                 <span class="confidence-bar-container">
                                     {{ "%.1f"|format(confidence * 100) }}%
                                     <div class="confidence-bar">
-                                        <div class="confidence-fill {{ 'danger' if prediction == 'Spam' else 'success' }}" 
-                                             style="width: {{ confidence * 100 }}%"></div>
+                                        <div class="confidence-fill {{ 'danger' if prediction == 'Spam' else 'success' }}"
+                                            style="width: {{ confidence * 100 }}%"></div>
                                     </div>
                                 </span>
                             </p>
                             {% endif %}
                         </div>
                         {% endif %}
-                        
+
                         {% if error %}
                         <div class="alert alert-warning mt-4">
                             <p class="mb-0"><strong>⚠️ ERROR:</strong> {{ error }}</p>
                         </div>
                         {% endif %}
-                        
+
                         {% if message and not error %}
                         <div class="mt-4">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -362,7 +426,7 @@
                                     <button type="submit" class="btn btn-sm btn-outline-warning">🗑️ Clear</button>
                                 </form>
                             </div>
-                            
+
                             {% if history %}
                             <div class="history-container">
                                 {% for item in history[:5] %}
@@ -370,9 +434,12 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="flex-grow-1">
                                             <small class="text-muted">{{ item.timestamp[:19] }}</small>
-                                            <p class="mb-1 message-preview">{{ item.message[:80] }}{% if item.message|length > 80 %}...{% endif %}</p>
-                                            <span class="badge {{ 'badge-danger' if item.prediction == 'spam' else 'badge-success' }}">
-                                                {{ item.prediction.upper() }} ({{ "%.0f"|format(item.confidence * 100) }}%)
+                                            <p class="mb-1 message-preview">{{ item.message[:80] }}{% if
+                                                item.message|length > 80 %}...{% endif %}</p>
+                                            <span
+                                                class="badge {{ 'badge-danger' if item.prediction == 'spam' else 'badge-success' }}">
+                                                {{ item.prediction.upper() }} ({{ "%.0f"|format(item.confidence * 100)
+                                                }}%)
                                             </span>
                                         </div>
                                     </div>
@@ -393,4 +460,5 @@
     <!-- Bootstrap JS (optional, for interactivity) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
