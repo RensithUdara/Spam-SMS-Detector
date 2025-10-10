@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Radar Spam Detector</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Radar Background Animation */
+        .radar-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at center, 
+                transparent 0%, 
+                rgba(0, 255, 0, 0.02) 25%, 
+                rgba(0, 255, 0, 0.05) 50%, 
+                rgba(0, 255, 0, 0.02) 75%, 
+                transparent 100%);
+        }
+
+        .radar-sweep {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60vw;
+            max-width: 600px;
+            min-width: 200px;
+            aspect-ratio: 1/1;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 270deg,
+                rgba(0, 255, 0, 0.3) 315deg,
+                rgba(0, 255, 0, 0.6) 330deg,
+                rgba(0, 255, 0, 0.3) 345deg,
+                transparent 360deg
+            );
+            animation: radar-sweep 3s linear infinite;
+        }
+
+        .radar-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            max-width: 800px;
+            min-width: 250px;
+            aspect-ratio: 1/1;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 50%;
+            animation: radar-pulse 2s ease-in-out infinite;
+        }
+
+        .radar-rings::before,
+        .radar-rings::after {
+            content: '';
+            position: absolute;
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 50%;
+        }
+
+        .radar-rings::before {
+            top: 12.5%;
+            left: 12.5%;
+            right: 12.5%;
+            bottom: 12.5%;
+            animation: radar-pulse 2s ease-in-out infinite 0.5s;
+        }
+
+        .radar-rings::after {
+            top: 25%;
+            left: 25%;
+            right: 25%;
+            bottom: 25%;
+            animation: radar-pulse 2s ease-in-out infinite 1s;
+        }
+
+        .radar-grid {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            max-width: 800px;
+            min-width: 250px;
+            aspect-ratio: 1/1;
+            transform: translate(-50%, -50%);
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 5vw 5vw, 5vw 5vw;
+            min-background-size: 40px 40px, 40px 40px;
+            animation: grid-flicker 4s ease-in-out infinite;
+        }
+
+        @keyframes radar-sweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes radar-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        @keyframes grid-flicker {
+            0%, 100% { opacity: 0.3; }
+            25% { opacity: 0.6; }
+            75% { opacity: 0.4; }
+        }
+
+        /* Card Styling */
+        .detector-card {
+            background: rgba(0, 20, 0, 0.9) !important;
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+
+        .card-title {
+            color: #00ff00 !important;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .form-control {
+            background: rgba(0, 0, 0, 0.7) !important;
+            border: 1px solid #00ff00 !important;
+            color: #00ff00 !important;
+            border-radius: 8px;
+        }
+
+        .form-control:focus {
+            background: rgba(0, 20, 0, 0.8) !important;
+            border-color: #00ff00 !important;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important;
+            color: #00ff00 !important;
+        }
+
+        .form-control::placeholder {
+            color: rgba(0, 255, 0, 0.6) !important;
+        }
+
+        .form-label {
+            color: #00ff00 !important;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-scan {
+            background: linear-gradient(45deg, #00aa00, #00ff00) !important;
+            border: 2px solid #00ff00 !important;
+            color: #000 !important;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            text-transform: uppercase;
+        }
+
+        .btn-scan:hover {
+            background: linear-gradient(45deg, #00ff00, #44ff44) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .alert-danger {
+            background: rgba(255, 0, 0, 0.2) !important;
+            border: 2px solid #ff4444 !important;
+            color: #ff6666 !important;
+            border-radius: 10px;
+            animation: threat-detected 1s ease-in-out;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 0, 0.2) !important;
+            border: 2px solid #00ff00 !important;
+            color: #00ff00 !important;
+            border-radius: 10px;
+            animation: clean-detected 1s ease-in-out;
+        }
+
+        @keyframes threat-detected {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); }
+        }
+
+        @keyframes clean-detected {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.7); }
+        }
+
+        .container {
+            padding: 2rem 0;
+            position: relative;
+            z-index: 1;
+            max-width: 100vw;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .col-md-8.col-lg-7 {
+                max-width: 95vw;
+            }
+            .radar-sweep, .radar-rings, .radar-grid {
+                width: 90vw;
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .container {
+                padding: 1rem 0.2rem;
+            }
+            .col-md-8.col-lg-7 {
+                padding: 0;
+                max-width: 100vw;
+            }
+            .detector-card {
+                border-radius: 8px;
+                padding: 0.5rem;
+            }
+            .radar-sweep, .radar-rings, .radar-grid {
+                width: 98vw;
+                min-width: 100px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .container {
+                padding: 0.5rem 0.1rem;
+            }
+            .col-md-8.col-lg-7 {
+                padding: 0;
+                max-width: 100vw;
+            }
+            .detector-card {
+                border-radius: 4px;
+                padding: 0.2rem;
+            }
+            .radar-sweep, .radar-rings, .radar-grid {
+                width: 100vw;
+                min-width: 60px;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .form-label {
+                font-size: 1rem;
+            }
+        }
+
+        /* Terminal-like header */
+        .terminal-header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: status-blink 2s ease-in-out infinite;
+        }
+
+        @keyframes status-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Radar Background Animation -->
+    <div class="radar-bg">
+        <div class="radar-grid"></div>
+        <div class="radar-rings"></div>
+        <div class="radar-sweep"></div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="terminal-header">
+                    <span class="status-indicator"></span>
+                    RADAR THREAT DETECTION SYSTEM v2.1 - STATUS: ONLINE
+                </div>
+                
+                <div class="card detector-card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">🛡️ SPAM RADAR SCANNER</h1>
+                        <form action="/predict" method="post">
+                            <div class="mb-3">
+                                <label for="message" class="form-label">📡 MESSAGE ANALYSIS INPUT</label>
+                                <textarea id="message" name="message" class="form-control" rows="4" placeholder="[INPUT] Enter suspicious message for threat analysis..." required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-scan">🔍 INITIATE SCAN</button>
+                            </div>
+                        </form>
+                        {% if prediction %}
+                        <div class="alert mt-4 {{ 'alert-danger' if prediction == 'Spam' else 'alert-success' }}">
+                            <p class="mb-1"><strong>📋 ANALYZED MESSAGE:</strong> {{ message }}</p>
+                            <p class="mb-0">
+                                <strong>🎯 THREAT STATUS:</strong> 
+                                {% if prediction == 'Spam' %}
+                                    ⚠️ SPAM DETECTED - THREAT IDENTIFIED
+                                {% else %}
+                                    ✅ CLEAN - NO THREATS FOUND
+                                {% endif %}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional, for interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
