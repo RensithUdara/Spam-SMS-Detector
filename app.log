@@ -38,3 +38,33 @@
 2025-10-10 16:33:25,944 - INFO - Request f2d46412: POST predict
 2025-10-10 16:33:25,965 - INFO - Request f2d46412: Success
 2025-10-10 16:33:25,966 - INFO - 10.4.2.1 - - [10/Oct/2025 16:33:25] "POST /predict HTTP/1.1" 200 -
+2025-10-10 16:35:01,501 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:01,501 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:01,502 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:02,680 - INFO -  * Restarting with watchdog (windowsapi)
+2025-10-10 16:35:06,041 - INFO - Model loaded successfully
+2025-10-10 16:35:06,047 - INFO - Vectorizer loaded successfully
+2025-10-10 16:35:06,047 - INFO - Starting spam detector app on port 5000
+2025-10-10 16:35:06,071 - WARNING -  * Debugger is active!
+2025-10-10 16:35:06,074 - INFO -  * Debugger PIN: 104-437-382
+2025-10-10 16:35:17,481 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:17,481 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:17,882 - INFO -  * Restarting with watchdog (windowsapi)
+2025-10-10 16:35:19,855 - INFO - Model loaded successfully
+2025-10-10 16:35:19,869 - INFO - Vectorizer loaded successfully
+2025-10-10 16:35:19,869 - INFO - Starting spam detector app on port 5000
+2025-10-10 16:35:19,886 - WARNING -  * Debugger is active!
+2025-10-10 16:35:19,886 - INFO -  * Debugger PIN: 104-437-382
+2025-10-10 16:35:25,697 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:25,697 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:25,697 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:26,402 - INFO -  * Restarting with watchdog (windowsapi)
+2025-10-10 16:35:28,441 - INFO - Model loaded successfully
+2025-10-10 16:35:28,448 - INFO - Vectorizer loaded successfully
+2025-10-10 16:35:28,452 - INFO - Starting spam detector app on port 5000
+2025-10-10 16:35:28,469 - WARNING -  * Debugger is active!
+2025-10-10 16:35:28,474 - INFO -  * Debugger PIN: 104-437-382
+2025-10-10 16:35:32,621 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:32,635 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:32,636 - INFO -  * Detected change in 'C:\\Users\\USER\\Downloads\\spam-detector-main\\spam-detector-main\\app.py', reloading
+2025-10-10 16:35:32,928 - INFO -  * Restarting with watchdog (windowsapi)
