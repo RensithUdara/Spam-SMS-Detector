@@ -96,12 +96,14 @@ class SpamDetector:
             if len(message) > 1000:
                 raise ValueError("Message too long (max 1000 characters)")
             
-        # Preprocess message
-        processed_message = self.preprocess_text(message)
-        
-        # Ensure we have some text to work with
-        if not processed_message or processed_message.strip() == "":
-            processed_message = "empty message"            # Check if model is a pipeline or separate components
+            # Preprocess message
+            processed_message = self.preprocess_text(message)
+            
+            # Ensure we have some text to work with
+            if not processed_message or processed_message.strip() == "":
+                processed_message = "empty message"
+            
+            # Check if model is a pipeline or separate components
             if hasattr(self.model, 'predict') and hasattr(self.model, 'named_steps'):
                 # Pipeline model
                 prediction = self.model.predict([processed_message])[0]
@@ -132,10 +134,15 @@ class SpamDetector:
             
         except Exception as e:
             # Safely handle Unicode characters in error messages
-            error_msg = str(e).encode('ascii', errors='replace').decode('ascii')
-            logger.error(f"Prediction error: {error_msg}")
-            logger.error(f"Message length: {len(processed_message)}")
-            logger.error(f"Message preview: {processed_message[:50]}...")
+            try:
+                error_msg = str(e).encode('ascii', errors='replace').decode('ascii')
+                logger.error(f"Prediction error: {error_msg}")
+                if 'processed_message' in locals():
+                    logger.error(f"Message length: {len(processed_message)}")
+                    logger.error(f"Message preview: {processed_message[:50]}...")
+            except Exception:
+                # Fallback if even logging fails
+                logger.error("Prediction error occurred but could not log details")
             raise
 
 # Initialize detector
