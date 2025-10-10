@@ -9,14 +9,25 @@ import numpy as np
 from functools import wraps
 import uuid
 
-# Setup logging
+# Setup logging with UTF-8 encoding for Unicode support
+import sys
+
+# Configure file handler with UTF-8 encoding
+file_handler = logging.FileHandler('app.log', encoding='utf-8')
+file_handler.setLevel(logging.INFO)
+file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(file_formatter)
+
+# Configure console handler
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(console_formatter)
+
+# Setup root logger
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('app.log'),
-        logging.StreamHandler()
-    ]
+    handlers=[file_handler, console_handler]
 )
 logger = logging.getLogger(__name__)
 
@@ -85,11 +96,13 @@ class SpamDetector:
             if len(message) > 1000:
                 raise ValueError("Message too long (max 1000 characters)")
             
-            # Preprocess message
-            processed_message = self.preprocess_text(message)
-            
-            # Check if model is a pipeline or separate components
-            if hasattr(self.model, 'predict'):
+        # Preprocess message
+        processed_message = self.preprocess_text(message)
+        
+        # Ensure we have some text to work with
+        if not processed_message or processed_message.strip() == "":
+            processed_message = "empty message"            # Check if model is a pipeline or separate components
+            if hasattr(self.model, 'predict') and hasattr(self.model, 'named_steps'):
                 # Pipeline model
                 prediction = self.model.predict([processed_message])[0]
                 if hasattr(self.model, 'predict_proba'):
@@ -118,7 +131,11 @@ class SpamDetector:
             return result
             
         except Exception as e:
-            logger.error(f"Prediction error: {str(e)}")
+            # Safely handle Unicode characters in error messages
+            error_msg = str(e).encode('ascii', errors='replace').decode('ascii')
+            logger.error(f"Prediction error: {error_msg}")
+            logger.error(f"Message length: {len(processed_message)}")
+            logger.error(f"Message preview: {processed_message[:50]}...")
             raise
 
 # Initialize detector
