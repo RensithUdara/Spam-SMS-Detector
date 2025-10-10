@@ -325,7 +325,7 @@
                         {% if prediction %}
                         <div class="alert mt-4 {{ 'alert-danger' if prediction == 'Spam' else 'alert-success' }}">
                             <p class="mb-1"><strong>📋 ANALYZED MESSAGE:</strong> {{ message }}</p>
-                            <p class="mb-0">
+                            <p class="mb-1">
                                 <strong>🎯 THREAT STATUS:</strong> 
                                 {% if prediction == 'Spam' %}
                                     ⚠️ SPAM DETECTED - THREAT IDENTIFIED
@@ -333,6 +333,55 @@
                                     ✅ CLEAN - NO THREATS FOUND
                                 {% endif %}
                             </p>
+                            {% if confidence %}
+                            <p class="mb-0">
+                                <strong>🔍 CONFIDENCE LEVEL:</strong> 
+                                <span class="confidence-bar-container">
+                                    {{ "%.1f"|format(confidence * 100) }}%
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill {{ 'danger' if prediction == 'Spam' else 'success' }}" 
+                                             style="width: {{ confidence * 100 }}%"></div>
+                                    </div>
+                                </span>
+                            </p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if error %}
+                        <div class="alert alert-warning mt-4">
+                            <p class="mb-0"><strong>⚠️ ERROR:</strong> {{ error }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        {% if message and not error %}
+                        <div class="mt-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-success mb-0">📊 ANALYSIS HISTORY</h5>
+                                <form action="/clear_history" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">🗑️ Clear</button>
+                                </form>
+                            </div>
+                            
+                            {% if history %}
+                            <div class="history-container">
+                                {% for item in history[:5] %}
+                                <div class="history-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <small class="text-muted">{{ item.timestamp[:19] }}</small>
+                                            <p class="mb-1 message-preview">{{ item.message[:80] }}{% if item.message|length > 80 %}...{% endif %}</p>
+                                            <span class="badge {{ 'badge-danger' if item.prediction == 'spam' else 'badge-success' }}">
+                                                {{ item.prediction.upper() }} ({{ "%.0f"|format(item.confidence * 100) }}%)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-muted mb-0">No previous analyses</p>
+                            {% endif %}
                         </div>
                         {% endif %}
                     </div>
