@@ -498,7 +498,7 @@
                                     {{ "%.1f"|format(confidence * 100) }}%
                                     <div class="confidence-bar">
                                         <div class="confidence-fill {{ 'danger' if prediction == 'Spam' else 'success' }}"
-                                            style="width: {{ confidence * 100 }}%"></div>
+                                            style="width: {{ '%.1f'|format(confidence * 100) }}%"></div>
                                     </div>
                                 </span>
                             </p>
