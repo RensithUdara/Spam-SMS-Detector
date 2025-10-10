@@ -168,12 +168,13 @@ class Config:
         # Clear existing handlers
         logger.handlers.clear()
         
-        # File handler with rotation
+        # File handler with rotation and UTF-8 encoding
         if self.logging.file_path:
             file_handler = logging.handlers.RotatingFileHandler(
                 self.logging.file_path,
                 maxBytes=self.logging.max_file_size,
-                backupCount=self.logging.backup_count
+                backupCount=self.logging.backup_count,
+                encoding='utf-8'
             )
             file_handler.setLevel(getattr(logging, self.logging.level))
             file_formatter = logging.Formatter(self.logging.format)
