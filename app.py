@@ -1,4 +1,3 @@
-import utils.session
 from flask import Flask, render_template, request, jsonify, session
 from flask_cors import CORS
 import pickle
